@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["HelloWorldApp.fsproj", "./"]
+
 RUN dotnet restore "HelloWorldApp.fsproj"
 COPY . .
 WORKDIR "/src/"
@@ -20,4 +21,5 @@ RUN dotnet publish "HelloWorldApp.fsproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY ordsprak.txt /app/ordsprak.txt
 ENTRYPOINT ["dotnet", "HelloWorldApp.dll"]
