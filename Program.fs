@@ -28,5 +28,5 @@ let rnd = System.Random()
 
 [<EntryPoint>]
 let main args =
-    webHost args { endpoints [ get "/" (Response.ofJson (Seq.randomChoiceWith rnd ordsprak )) ] }
+    webHost args { endpoints [ get "/" (fun ctx -> Response.ofJson (List.randomChoice (Seq.toList ordsprak)) ctx) ] }
     0
